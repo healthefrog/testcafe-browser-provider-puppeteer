@@ -20,7 +20,9 @@ export default {
                 console.log('Using puppeteer without sandbox!');
                 puppeteerArgs = [
                     '--no-sandbox',
-                    '--disable-setuid-sandbox'
+                    '--disable-setuid-sandbox',
+                    '--remote-debugging-port=9222',
+                    '--lang=en-GB'
                 ];
             }
             this.browser = await puppeteer.launch({

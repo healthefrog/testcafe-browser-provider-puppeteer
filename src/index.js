@@ -1,5 +1,9 @@
 import puppeteer from 'puppeteer';
 
+const settings = {
+    lang: 'en-GB',
+};
+
 export default {
     // Multiple browsers support
     isMultiBrowser: true,
@@ -8,21 +12,26 @@ export default {
 
     openedPages: {},
 
+    setLang(lang) {
+        settings.lang = lang;
+        console.log(`Puppeteer language is set to '${settings.lang}'`);
+    },
 
     // Required - must be implemented
     // Browser control
     async openBrowser(id, pageUrl, browserName) {
 
         if (!this.browser) {
-            let puppeteerArgs = [];
+            let puppeteerArgs = [`--lang=${settings.lang}`];
 
-            if (browserName === "no_sandbox") {
-                console.log('Using puppeteer without sandbox!');
+            if (browserName.includes("no_sandbox")) {
+                console.log(`Using puppeteer without sandbox! Language = ${settings.lang}`);
+                console.log('');
                 puppeteerArgs = [
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
                     '--remote-debugging-port=9222',
-                    '--lang=en-GB'
+                    `--lang=${settings.lang}`
                 ];
             }
             this.browser = await puppeteer.launch({
